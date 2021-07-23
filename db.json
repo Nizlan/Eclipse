@@ -3,6 +3,7 @@
       {
       "id": 1,
       "name": "Иван",
+      "username": "Iv991",
       "email": "ivan@mail.ru",
       "phone": 546456456,
       "website": "ivan.com",
@@ -62,6 +63,7 @@
     {
       "id": 2,
       "name": "Петр",
+      "username": "flex16",
       "email": "ivan@mail.ru",
       "phone": 546456456,
       "website": "ivan.com",

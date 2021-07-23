@@ -32,10 +32,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
       body: ListView(
         shrinkWrap: true,
         children: [
-          Text('name ${user.name}'),
-          Text('email ${user.email}'),
-          Text('phone ${user.phone.toString()}'),
-          Text('website ${user.website}'),
+          Text(user.name),
+          Text(user.email),
+          Text(user.phone.toString()),
+          Text(user.website),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

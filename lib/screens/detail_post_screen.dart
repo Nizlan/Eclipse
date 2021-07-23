@@ -1,4 +1,5 @@
 import 'package:eclipse/models/user.dart';
+import 'package:eclipse/services/api_manager.dart';
 import 'package:flutter/material.dart';
 
 class DetailPostScreen extends StatefulWidget {
@@ -11,6 +12,7 @@ class DetailPostScreen extends StatefulWidget {
 }
 
 class _DetailPostScreenState extends State<DetailPostScreen> {
+  final _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +39,43 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            // Provider.of<Activities>(this.context, listen: false)
+            //     .returnAdd(),
+            showModalBottomSheet(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30)),
+                ),
+                elevation: 20.0,
+                context: context,
+                builder: (BuildContext context) {
+                  return SingleChildScrollView(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 3,
+                      padding: EdgeInsets.only(top: 10),
+                      child: Column(children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: TextField(
+                            autofocus: true,
+                            controller: _textController,
+                            onSubmitted: (_) => setState(() {}),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: ApiManager()
+                              .update(widget.user, _textController.text),
+                          child: Text('Отправить комментарий'),
+                        ),
+                      ]),
+                    ),
+                  );
+                }),
+        child: Icon(Icons.add),
       ),
     );
   }

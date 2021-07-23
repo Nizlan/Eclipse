@@ -18,4 +18,8 @@ class ApiManager {
       print(error);
     }
   }
+
+  update(User user, String text) {
+    // user.posts.comm
+  }
 }

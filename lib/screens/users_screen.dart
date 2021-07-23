@@ -43,6 +43,7 @@ class _UsersScreenState extends State<UsersScreen> {
                                           .users[index]
                                           .id))),
                           child: Container(
+                            height: MediaQuery.of(context).size.height / 8,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
@@ -60,29 +61,41 @@ class _UsersScreenState extends State<UsersScreen> {
                                 ),
                               ],
                             ),
-                            margin: EdgeInsets.only(bottom: 10),
+                            margin: EdgeInsets.only(top: 10),
+                            padding: EdgeInsets.only(left: 20),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text('email: '),
-                                    Text(Provider.of<UsersData>(this.context,
-                                            listen: false)
-                                        .users[index]
-                                        .email),
+                                    Text(
+                                      'email: ',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    Text(
+                                      Provider.of<UsersData>(this.context,
+                                              listen: false)
+                                          .users[index]
+                                          .email,
+                                      style: TextStyle(fontSize: 16),
+                                    ),
                                   ],
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text('name: '),
-                                    Text(Provider.of<UsersData>(this.context,
-                                            listen: false)
-                                        .users[index]
-                                        .name),
+                                    Text(
+                                      'name: ',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    Text(
+                                      Provider.of<UsersData>(this.context,
+                                              listen: false)
+                                          .users[index]
+                                          .name,
+                                      style: TextStyle(fontSize: 16),
+                                    ),
                                   ],
                                 ),
                               ],

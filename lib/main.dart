@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider.value(
       value: UsersData(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Eclipse',
         theme: ThemeData(
           primarySwatch: Colors.blue,

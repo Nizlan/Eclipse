@@ -24,10 +24,12 @@ class _PostsScreenState extends State<PostsScreen> {
                       DetailPostScreen(widget.user, widget.user.posts[index]),
                 ),
               ),
-              child: ListTile(
-                title: Text(widget.user.posts[index].title),
-                subtitle: Text(
-                    '${widget.user.posts[index].text.substring(1, 60)} ...'),
+              child: Card(
+                child: ListTile(
+                  title: Text(widget.user.posts[index].title),
+                  subtitle: Text(
+                      '${widget.user.posts[index].text.substring(1, 60)} ...'),
+                ),
               ),
             );
           }),
