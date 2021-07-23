@@ -1,6 +1,8 @@
 import 'package:eclipse/models/user.dart';
+import 'package:eclipse/providers/users_data.dart';
 import 'package:eclipse/services/api_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetailPostScreen extends StatefulWidget {
   final User user;
@@ -13,6 +15,8 @@ class DetailPostScreen extends StatefulWidget {
 
 class _DetailPostScreenState extends State<DetailPostScreen> {
   final _textController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,16 +74,39 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                       padding: EdgeInsets.only(top: 10),
                       child: Column(children: [
                         Container(
+                          padding: EdgeInsets.only(left: 10),
                           margin: EdgeInsets.only(top: 10),
                           child: TextField(
                             autofocus: true,
+                            decoration: InputDecoration(hintText: 'текст'),
                             controller: _textController,
-                            onSubmitted: (_) => setState(() {}),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 10),
+                          child: TextField(
+                            decoration: InputDecoration(hintText: 'имя'),
+                            autofocus: true,
+                            controller: _nameController,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 10),
+                          child: TextField(
+                            decoration: InputDecoration(hintText: 'email'),
+                            autofocus: true,
+                            controller: _emailController,
                           ),
                         ),
                         TextButton(
-                          onPressed: ApiManager()
-                              .update(widget.user, _textController.text),
+                          onPressed: Provider.of<UsersData>(this.context,
+                                  listen: false)
+                              .update(
+                                  widget.user,
+                                  widget.posts,
+                                  _textController.text,
+                                  _nameController.text,
+                                  _emailController.text),
                           child: Text(
                             'Отправить комментарий',
                             style: TextStyle(color: Colors.black),

@@ -51,4 +51,6 @@ class UsersData with ChangeNotifier {
       }
     }
   }
+
+  update(User user, post, String text, String name, String email) {}
 }
