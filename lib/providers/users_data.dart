@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:eclipse/models/user.dart';
+import 'package:eclipse/services/api_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UsersData with ChangeNotifier {
   List<User> _users = [];
+  SharedPreferences pref;
   List<User> get users {
     return [..._users];
   }
@@ -15,10 +17,29 @@ class UsersData with ChangeNotifier {
     return user;
   }
 
-  Future<void> fetchAndSet(list) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
+  setPreferences() async {
+    var users = await ApiManager().fetch();
+    pref.setString('users', users);
+    pref.setBool('isReceived', true);
+  }
+
+  checker() async {
+    pref = await SharedPreferences.getInstance();
+    if (pref.getBool('isReceived') == null) {
+      setPreferences();
+    }
+  }
+
+  Future<void> fetchAndSet() async {
+    Future.delayed(Duration.zero)
+        .then((value) => checker())
+        .then((value) => getPreferences());
+  }
+
+  Future getPreferences() async {
+    var jsonMap = json.decode(pref.getString('users'));
     var isThere = false;
-    for (var el in list) {
+    for (var el in jsonMap) {
       var newEl = User.fromJson(el);
       for (var user in _users) {
         if (user.id == newEl.id) {
@@ -26,8 +47,7 @@ class UsersData with ChangeNotifier {
         }
       }
       if (!isThere) {
-        pref.setString(newEl.id.toString(), jsonEncode(User.fromJson(el)));
-        _users.add(User.fromJson(el));
+        _users.add(newEl);
       }
     }
   }

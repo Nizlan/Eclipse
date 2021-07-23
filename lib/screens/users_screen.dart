@@ -23,7 +23,8 @@ class _UsersScreenState extends State<UsersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: ApiManager().fetch(context),
+          future:
+              Provider.of<UsersData>(this.context, listen: false).fetchAndSet(),
           builder: (context, snapshot) => snapshot.connectionState ==
                   ConnectionState.waiting
               ? Center(child: CircularProgressIndicator())
