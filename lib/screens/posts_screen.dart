@@ -28,7 +28,7 @@ class _PostsScreenState extends State<PostsScreen> {
                 child: ListTile(
                   title: Text(widget.user.posts[index].title),
                   subtitle: Text(
-                      '${widget.user.posts[index].text.substring(1, 60)} ...'),
+                      '${widget.user.posts[index].text.substring(0, 60)} ...'),
                 ),
               ),
             );

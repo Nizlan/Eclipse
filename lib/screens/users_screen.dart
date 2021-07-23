@@ -70,14 +70,14 @@ class _UsersScreenState extends State<UsersScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'email: ',
+                                      'username: ',
                                       style: TextStyle(fontSize: 16),
                                     ),
                                     Text(
                                       Provider.of<UsersData>(this.context,
                                               listen: false)
                                           .users[index]
-                                          .email,
+                                          .username,
                                       style: TextStyle(fontSize: 16),
                                     ),
                                   ],
