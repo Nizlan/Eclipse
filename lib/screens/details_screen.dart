@@ -1,5 +1,7 @@
 import 'package:eclipse/models/user.dart';
 import 'package:eclipse/providers/users_data.dart';
+import 'package:eclipse/screens/albums_screen.dart';
+import 'package:eclipse/screens/posts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +29,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
       appBar: AppBar(
         title: Text(user.email),
       ),
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
         children: [
           Text('name ${user.name}'),
           Text('email ${user.email}'),
@@ -43,33 +46,86 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ],
           ),
           Text('address ${user.address}'),
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
+          GestureDetector(
+            onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => PostsScreen(user))),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: user.posts.length >= 3
+                  ? Column(
+                      children: [
+                        ListTile(
+                          title: Text(user.posts[0].title),
+                          subtitle: Text(
+                              '${user.posts[0].text.substring(1, 50)} ...'),
+                        ),
+                        ListTile(
+                          title: Text(user.posts[1].title),
+                          subtitle: Text(
+                              '${user.posts[1].text.substring(1, 50)} ...'),
+                        ),
+                        ListTile(
+                          title: Text(user.posts[2].title),
+                          subtitle: Text(
+                              '${user.posts[2].text.substring(1, 50)} ...'),
+                        ),
+                      ],
+                    )
+                  : Text('Здесь будут появляться ваши посты'),
             ),
-            child: user.posts.length >= 3
-                ? Column(
+          ),
+          GestureDetector(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => AlbumsScreen(user.albums))),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Column(
                     children: [
-                      Text(user.posts[0].title),
-                      Text(user.posts[1].title),
-                      Text(user.posts[2].title),
+                      Container(
+                          width: 100,
+                          child: Image(
+                              image:
+                                  NetworkImage(user.albums[0].photos[0].link))),
+                      Text(user.albums[0].description),
                     ],
                   )
-                : Text('Здесь будут появляться ваши посты'),
+                ],
+              ),
+            ),
           ),
         ],
       ),
