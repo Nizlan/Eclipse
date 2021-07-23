@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class UsersData with ChangeNotifier {
   List<User> _users = [];
-  List<User> get activities {
+  List<User> get users {
     return [..._users];
   }
 
