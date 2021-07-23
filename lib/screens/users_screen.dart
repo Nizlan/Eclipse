@@ -12,7 +12,7 @@ class _UsersScreenState extends State<UsersScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    Future.delayed(Duration.zero).then((value) => ApiManager().fetch());
+    Future.delayed(Duration.zero).then((value) => ApiManager().fetch(context));
     super.initState();
   }
 
