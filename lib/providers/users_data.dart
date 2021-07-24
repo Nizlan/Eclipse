@@ -13,38 +13,29 @@ class UsersData with ChangeNotifier {
     return [..._users];
   }
 
-  userById(id) {
-    User user = _users.firstWhere((element) => element.id == id);
-    return user;
+  User userById(id) {
+    return _users.firstWhere((element) => element.id == id);
   }
 
   Future<void> fetchAndSet() async {
     pref = await SharedPreferences.getInstance();
-    pref.containsKey('users') == true ? getPreferences() : setPreferences();
+    pref.containsKey('users')
+        ? getPreferences(pref.getString('users'))
+        : getPreferences(await ApiManager().fetch());
+    print(_users);
   }
 
-  setPreferences() async {
-    ApiManager()
-        .fetch()
-        .then((value) => pref.setString('users', value))
-        .then((value) => getPreferences());
+  Future setPreferences() async {
+    var string = await ApiManager().fetch();
+    pref.setString('users', string);
   }
 
-  Future getPreferences() async {
-    var jsonMap = json.decode(pref.getString('users'));
-    var isThere = false;
+  Future getPreferences(string) async {
+    var jsonMap = json.decode(string);
     for (var el in jsonMap) {
       var newEl = User.fromJson(el);
-      for (var user in _users) {
-        if (user.id == newEl.id) {
-          isThere = true;
-        }
-      }
-      if (!isThere) {
-        _users.add(newEl);
-      }
+      _users.add(newEl);
     }
-    return _users;
   }
 
   updateComments(User user, post, String text, String name, String email) {

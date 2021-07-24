@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class ApiManager {
-  Future fetch() async {
+  Future<String> fetch() async {
     try {
       var response = await http.get(
           Uri.https("my-json-server.typicode.com", "/znol1/Eclipse/users"));
@@ -11,6 +11,7 @@ class ApiManager {
       return jsonString;
     } catch (error) {
       print(error);
+      return null;
     }
   }
 
