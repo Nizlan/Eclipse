@@ -31,7 +31,7 @@ class UsersData with ChangeNotifier {
   }
 
   Future<void> fetchAndSet() async {
-    Future.delayed(Duration(microseconds: 5))
+    Future.delayed(Duration(microseconds: 10))
         .then((value) => checker())
         .then((value) => getPreferences());
   }

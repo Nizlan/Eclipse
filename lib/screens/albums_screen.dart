@@ -1,3 +1,4 @@
+import 'package:eclipse/screens/photos.dart';
 import 'package:flutter/material.dart';
 
 class AlbumsScreen extends StatefulWidget {
@@ -20,20 +21,24 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
               mainAxisSpacing: 20),
           itemCount: widget.albums.length,
           itemBuilder: (BuildContext ctx, index) {
-            return Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(widget.albums[index].photos[0].link),
-                  fit: BoxFit.cover,
+            return GestureDetector(
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Photos(widget.albums[index]))),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(widget.albums[index].photos[0].link),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              child: Center(
-                child: Text(
-                  widget.albums[index].description,
-                  style: TextStyle(
-                      fontSize: 27,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                child: Center(
+                  child: Text(
+                    widget.albums[index].description,
+                    style: TextStyle(
+                        fontSize: 27,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             );
