@@ -31,7 +31,7 @@ class UsersData with ChangeNotifier {
   }
 
   Future<void> fetchAndSet() async {
-    Future.delayed(Duration.zero)
+    Future.delayed(Duration(microseconds: 5))
         .then((value) => checker())
         .then((value) => getPreferences());
   }
@@ -52,5 +52,17 @@ class UsersData with ChangeNotifier {
     }
   }
 
-  update(User user, post, String text, String name, String email) {}
+  updateComments(User user, post, String text, String name, String email) {
+    var userId = _users.indexWhere((element) => element.id == user.id);
+    var postId = _users[userId]
+        .posts
+        .indexWhere((element) => element.title == post.title);
+    _users[userId]
+        .posts[postId]
+        .comments
+        .add(Comment(name: name, email: email, text: text));
+    var jsonUsers = json.encode(_users.map((e) => e.toJson()).toList());
+    pref.setString('users', jsonUsers);
+    ApiManager().addComent(jsonUsers);
+  }
 }

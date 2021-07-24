@@ -98,18 +98,22 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                             controller: _emailController,
                           ),
                         ),
-                        TextButton(
-                          onPressed: Provider.of<UsersData>(this.context,
-                                  listen: false)
-                              .update(
-                                  widget.user,
-                                  widget.posts,
-                                  _textController.text,
-                                  _nameController.text,
-                                  _emailController.text),
-                          child: Text(
-                            'Отправить комментарий',
-                            style: TextStyle(color: Colors.black),
+                        GestureDetector(
+                          onTap: () => setState(() {
+                            Provider.of<UsersData>(this.context, listen: false)
+                                .updateComments(
+                                    widget.user,
+                                    widget.posts,
+                                    _textController.text,
+                                    _nameController.text,
+                                    _emailController.text);
+                          }),
+                          child: Container(
+                            margin: EdgeInsets.only(top: 15),
+                            child: Text(
+                              'Отправить комментарий',
+                              style: TextStyle(color: Colors.black),
+                            ),
                           ),
                         ),
                       ]),
