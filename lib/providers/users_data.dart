@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:eclipse/models/user.dart';
 import 'package:eclipse/services/api_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UsersData with ChangeNotifier {
@@ -17,22 +18,15 @@ class UsersData with ChangeNotifier {
     return user;
   }
 
-  setPreferences() async {
-    var users = await ApiManager().fetch();
-    pref.setString('users', users);
-    pref.setBool('isReceived', true);
-  }
-
-  checker() async {
-    pref = await SharedPreferences.getInstance();
-    if (pref.getBool('isReceived') == null) {
-      setPreferences();
-    }
-  }
-
   Future<void> fetchAndSet() async {
-    Future.delayed(Duration(microseconds: 10))
-        .then((value) => checker())
+    pref = await SharedPreferences.getInstance();
+    pref.containsKey('users') == true ? getPreferences() : setPreferences();
+  }
+
+  setPreferences() async {
+    ApiManager()
+        .fetch()
+        .then((value) => pref.setString('users', value))
         .then((value) => getPreferences());
   }
 
@@ -50,6 +44,7 @@ class UsersData with ChangeNotifier {
         _users.add(newEl);
       }
     }
+    return _users;
   }
 
   updateComments(User user, post, String text, String name, String email) {
